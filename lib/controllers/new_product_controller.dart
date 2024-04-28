@@ -32,53 +32,25 @@ class NewProductController extends GetxController{
   Future<void> createProduct() async {
     var headers = {
     'Authorization': userController.token,
-    'Content-Type': 'multipart/form-data',
+    'Content-Type': 'application/json',
     };
     try {
-      // final formData = dio.FormData();
-      final data = {
+      var url = Uri.parse(
+          '${ApiEndPoints.baseUrl}/login');
+      Map body = {
         'name': nameController.text.trim(),
         'desc': descController.text.trim(),
-        'price': descController.text,
-        'stock': descController.text,
+        'price': priceController.text,
+        'stock': stockController.text,
       };
-
-
-      final formData = dio.FormData.fromMap(data);
-
-      if(image.value != null){
-          formData.files.add(
-            dio.MultipartFile.fromFile(
-            image.value!.path,
-            filename: image.value!.path.split('/').last) as MapEntry<String, dio.MultipartFile>
-        );
-      }
-
-      print(formData.files);
-      print(formData.fields);
-
-      final response = await dio.Dio().post(
-        // Uri.parse(
-        //   '${ApiEndPoints.baseUrl}/product') as String,
-        '${ApiEndPoints.baseUrl}/product',
-          data: formData,
-          options: dio.Options(headers: headers)
-      );
-      print(formData);
-      print(response);
-
-
-
+      http.Response response =
+          await http.post(url, body: jsonEncode(body), headers: headers);
       if (response.statusCode == 201) {
-        // final json = jsonDecode(response.body);
-        // userController.setUser(json['data']['user']);
-        // var token = json['data']['token'];
-        // final SharedPreferences? prefs = await _prefs;
-        // await prefs?.setString('token', token);
-        // emailController.clear();
-        // passwordController.clear();
-        // Get.offAllNamed('/');
         Get.snackbar('Success!', 'Crete Product Success!');
+        nameController.clear();
+        descController.clear();
+        descController.clear();
+        descController.clear();
       } else {
         throw "Unknown Error Occured";
       }

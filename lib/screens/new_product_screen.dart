@@ -65,7 +65,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('New Product Create!'), backgroundColor: Colors.blueAccent,foregroundColor: Colors.white),
+      appBar: AppBar(title: const Text('Create new product'), backgroundColor: Colors.blueAccent,foregroundColor: Colors.white),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

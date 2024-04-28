@@ -39,7 +39,7 @@ class _BottomNavState extends State<BottomNav> {
     ];
 
     // Check user role to decide if the "Admin" tab should be added
-    if (userController.user.value!.role == 'user') {
+    if (userController.user.value!.role == 'admin') {
       items.add(
         const BottomNavigationBarItem(
           icon: Icon(Icons.school),
