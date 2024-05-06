@@ -10,32 +10,37 @@ class ProductController extends GetxController{
   final page = 1.obs;
   final limit = 10.obs;
   final search = ''.obs;
+  final isLoading = false.obs;
 
   final UserController  userController = Get.put(UserController());
 
 
+
     void loadProducts() async {
+      isLoading.value = true;
       final headers = {
         'Content-Type': 'application/json',
-        'Authorization': userController.token
+        'Authorization': userController.token.value
       };
     try {
       var url = Uri.parse(
           '${ApiEndPoints.baseUrl}/products');
       http.Response response =
           await http.get(url, headers: headers);
+
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         if(json['data']['data'].length != 0){
-          // List<Product> list = List.from(json['data']['data'] as List<Product>);
         products.value = RxList<Product>.from(json['data']['data'].map((x) => Product.fromJson(x)));
-        // print(_products.va);
+        isLoading.value = false;
         }
+
       } else {
+        isLoading.value = false;
         throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
       }
     } catch (e) {
-      // Get.back();
+      isLoading.value = false;
       Get.snackbar('Error!', e.toString(),snackPosition: SnackPosition.BOTTOM);
     }
     }

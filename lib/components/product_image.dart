@@ -20,7 +20,7 @@ class ProductImage extends StatelessWidget {
         ),
         clipBehavior: Clip.hardEdge,
         child: FadeInImage(
-    image: NetworkImage(product.img),
+    image: NetworkImage(product.img ?? ''),
     placeholder: const AssetImage('assets/product-not-found.jpg'),
     imageErrorBuilder:(context, error, stackTrace) {
        return Image.asset('assets/product-not-found.jpg',

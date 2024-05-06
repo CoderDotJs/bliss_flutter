@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/drawer_nav.dart';
 import 'package:frontend/screens/new_product_screen.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,11 @@ class AdminScreen extends StatelessWidget{
           onPressed: (){
             Get.off(const NewProductScreen());
         },
-        child: const Text('Add New Product'))]),),);
+        child: const Text('Add New Product'))]),),
+        // bottomNavigationBar: const BottomNav(),
+        drawer: const DrawerNav(),
+
+        );
   }
 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/components/drawer_nav.dart';
 import 'package:frontend/components/bottom_nav.dart';
 import 'package:frontend/components/category_tile.dart';
 import 'package:frontend/components/header.dart';
@@ -28,6 +29,7 @@ static String womenImg =
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(title: const Text('App'),),
       body: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
               children: [
@@ -51,7 +53,8 @@ static String womenImg =
                 ),
               ],
             ),
-      bottomNavigationBar: const BottomNav(),
+      // bottomNavigationBar: const BottomNav(),
+      drawer: const DrawerNav()
     );
   }
 }

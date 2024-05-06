@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/constants/app_constants.dart';
 import 'package:frontend/models/product.dart';
+import 'package:frontend/screens/product_screen.dart';
+import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({required this.product, Key? key}) : super(key: key);
@@ -28,10 +31,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context){
-  print(product);
 
     return Scaffold(
-      appBar: AppBar(title: Text(product!.name), backgroundColor: Colors.blueAccent,foregroundColor: Colors.white),
+      appBar: AppBar(leading: IconButton(onPressed: () {
+        Get.back();
+      },icon: const Icon(Icons.arrow_back),),title: Text(product!.name), backgroundColor: Colors.blueAccent,foregroundColor: Colors.white, actions: [IconButton(onPressed: (){
+        print(product!.name);
+        Get.offNamed(AppConstants.updateProduct, arguments: {"id": product!.name});
+      }, icon: const Icon(Icons.edit))],),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,7 +53,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               children: [
                 Expanded(
                   child: FadeInImage(
-    image: NetworkImage(product!.img),
+    image: NetworkImage(product?.img ?? ''),
     placeholder: const AssetImage('assets/product-not-found.jpg'),
     imageErrorBuilder:(context, error, stackTrace) {
        return Image.asset('assets/product-not-found.jpg',

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/product_image.dart';
 import 'package:frontend/components/product_tile.dart';
 import 'package:frontend/models/product.dart';
+import 'package:frontend/screens/product_detail_screen.dart';
+import 'package:get/get.dart';
 
 class ProductRow extends StatelessWidget {
   const ProductRow(
@@ -15,25 +18,24 @@ class ProductRow extends StatelessWidget {
 
     return productTiles.isEmpty
         ? const SizedBox.shrink()
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 210,
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                  itemCount: productTiles.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (_, index) => productTiles[index],
-                  separatorBuilder: (_, index) => const SizedBox(
-                    width: 24,
-                  ),
-                ),
-              ),
-            ],
-          );
+        : GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+          itemCount: productTiles.length,
+
+          itemBuilder: (BuildContext context, index) {
+            final product = products[index];
+          return Expanded(child: GestureDetector(onTap: () {
+              Get.off(ProductDetailsScreen(product: product));
+          },child: SizedBox(width: double.infinity, height: double.infinity,child: Padding(padding: const EdgeInsets.all(10),
+          child: Column(children: [
+ProductImage(product: product),
+            Text(product.name),
+            // Text(product.desc),
+            // Text(product.stock.toString()),
+            // Text( product.price.toString()),
+            ],),),),));
+        });
   }
 }

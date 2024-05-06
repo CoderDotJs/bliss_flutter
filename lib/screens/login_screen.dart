@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Expanded(child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // const Align(alignment: Alignment.center,child: ,),
@@ -191,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
-        ],) ,
+        ],),) ,
     );
   }
 }

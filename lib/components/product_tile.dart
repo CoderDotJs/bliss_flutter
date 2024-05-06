@@ -15,8 +15,6 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.of(context)
-        //   .pushNamed('/product-details', arguments: product);
         Get.off(ProductDetailsScreen(product: product));
       },
       child: SizedBox(

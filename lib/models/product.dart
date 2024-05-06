@@ -7,7 +7,7 @@ String productToJson(List<Product> data) => json.encode(List<dynamic>.from(data.
 class Product {
     String name;
     int stock;
-    String img;
+    String? img;
     double price;
     String desc;
 

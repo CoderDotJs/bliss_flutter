@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/widgets.dart';
+import 'package:frontend/constants/app_constants.dart';
 import 'package:frontend/controllers/user_controller.dart';
 import 'package:frontend/utils/api_endpoints.dart';
 import 'package:get/get.dart';
@@ -27,11 +28,9 @@ class LoginController extends GetxController{
         final json = jsonDecode(response.body);
         userController.setUser(json['data']['user']);
         var token = json['data']['token'];
-        final SharedPreferences? prefs = await _prefs;
-        await prefs?.setString('token', token);
-        // emailController.clear();
-        // passwordController.clear();
-        Get.offAllNamed('/');
+        final SharedPreferences prefs = await _prefs;
+        await prefs.setString('token', token);
+        Get.offAllNamed(AppConstants.home);
       } else {
         throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
       }

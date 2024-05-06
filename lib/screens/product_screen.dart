@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/Drawer_nav.dart';
 import 'package:frontend/components/bottom_nav.dart';
 import 'package:frontend/components/header.dart';
 import 'package:frontend/components/product_item.dart';
@@ -30,14 +31,18 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(title!), backgroundColor: Colors.blueAccent,foregroundColor: Colors.white),
       body: Obx(() {
-        if(productController.products.isEmpty){
-
-        return const Text('Not Found');
-        }else{
-          return ProductRow(products: productController.products);
-        }
+          if(productController.isLoading.value){
+            return const Center(child: CircularProgressIndicator(),);
+          }else{
+            if(productController.products.isEmpty){
+              return const Center(child: Text('No Products!'),);
+            }else{
+              return ProductRow(products: productController.products);
+            }
+          }
         }),
-      bottomNavigationBar: const BottomNav(),
+      // bottomNavigationBar: const BottomNav(),
+      drawer: const DrawerNav(),
     );
   }
 }

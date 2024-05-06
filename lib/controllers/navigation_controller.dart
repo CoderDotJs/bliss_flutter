@@ -11,7 +11,7 @@ class NavigationController extends GetxController{
         Get.offNamed('/');
         break;
       case 1:
-        Get.off(ProductScreen());
+        Get.offNamed('/products');
         break;
       case 2:
         Get.offNamed('/admin');
