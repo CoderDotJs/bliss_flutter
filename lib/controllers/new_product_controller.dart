@@ -51,30 +51,30 @@ class NewProductController extends GetxController{
         'stock': int.parse(stockController.text),
       };
 
-      var multipartReq = http.MultipartRequest('POST', url);
+      // var multipartReq = http.MultipartRequest('POST', url);
 
-      multipartReq.files.add(http.MultipartFile(
-          'img',
-          image.value!.readAsBytes().asStream(),
-          image.value!.lengthSync(),
-          filename: image.value!.path.split('/').last,
-        ),);
+      // multipartReq.files.add(http.MultipartFile(
+      //     'img',
+      //     image.value!.readAsBytes().asStream(),
+      //     image.value!.lengthSync(),
+      //     filename: image.value!.path.split('/').last,
+      //   ),);
 
-        multipartReq.fields['data'] = jsonEncode(body);
+      //   multipartReq.fields['data'] = jsonEncode(body);
 
-        multipartReq.headers.addAll(headers);
+      //   multipartReq.headers.addAll(headers);
 
-        print(multipartReq.files);
-        print(multipartReq.fields);
+      //   print(multipartReq.files);
+      //   print(multipartReq.fields);
 
-      var response = await multipartReq.send();
+      // var response = await multipartReq.send();
 
-      print(response.statusCode);
+      // print(response.statusCode);
 
 
-      // http.Response response =
-      //     await http.post(url, body: jsonEncode(body), headers: headers);
-      //     print(response.statusCode);
+      http.Response response =
+          await http.post(url, body: jsonEncode(body), headers: headers);
+          // print(response.statusCode);
       if (response.statusCode == 200) {
         Get.snackbar('Success!', 'Crete Product Success!');
         nameController.clear();

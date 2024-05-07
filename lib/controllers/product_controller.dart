@@ -6,11 +6,12 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class ProductController extends GetxController{
-  var products = <Product>[].obs;
-  final page = 1.obs;
-  final limit = 10.obs;
-  final search = ''.obs;
-  final isLoading = false.obs;
+  Rx<RxList<Product>> products = RxList<Product>([]).obs;
+  RxInt page = 1.obs;
+  RxInt limit = 10.obs;
+  RxString search = ''.obs;
+  RxBool isLoading = false.obs;
+  RxBool hasMore = false.obs;
 
   final UserController  userController = Get.put(UserController());
 
@@ -24,15 +25,19 @@ class ProductController extends GetxController{
       };
     try {
       var url = Uri.parse(
-          '${ApiEndPoints.baseUrl}/products');
+          '${ApiEndPoints.baseUrl}/products?page=$page&limit=$limit');
       http.Response response =
           await http.get(url, headers: headers);
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         if(json['data']['data'].length != 0){
-        products.value = RxList<Product>.from(json['data']['data'].map((x) => Product.fromJson(x)));
-        isLoading.value = false;
+          RxList<Product> list = RxList<Product>.from(json['data']['data'].map((x) => Product.fromJson(x)));
+          products.value.addAll(list);
+          isLoading.value = false;
+        }
+        if(json['data']['meta']){
+          hasMore.value = json['data']['meta']['hasMore'];
         }
 
       } else {
@@ -41,7 +46,7 @@ class ProductController extends GetxController{
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar('Error!', e.toString(),snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Error!', e.toString(),snackPosition: SnackPosition.TOP);
     }
     }
 

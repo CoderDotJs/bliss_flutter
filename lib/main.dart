@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:frontend/constants/app_constants.dart';
 import 'package:frontend/screens/admin_screen.dart';
 import 'package:frontend/screens/complex_screen.dart';
@@ -13,8 +14,15 @@ import 'package:frontend/screens/product_screen.dart';
 import 'package:frontend/screens/signup_screen.dart';
 import 'package:frontend/screens/update_product_screen.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "assets/.env");
+  Stripe.publishableKey=dotenv.env["STRIPE_PUBLISH"]!;
+  // Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
+  // Stripe.urlScheme = 'flutterstripe';
+  await Stripe.instance.applySettings();
   runApp(const MyApp());
 }
 

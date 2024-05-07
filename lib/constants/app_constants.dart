@@ -31,6 +31,12 @@ class AppConstants {
         },
       ),
       ListTile(
+        title: const Text('Admin'),
+        onTap: () {
+          Get.offNamed(admin);
+        },
+      ),
+      ListTile(
         title: const Text('Future'),
         onTap: () {
           Get.offNamed(future);

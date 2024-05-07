@@ -10,17 +10,17 @@ class GridController extends GetxController{
   Rx<RxList<Grid>> gridData = RxList<Grid>([]).obs;
   Rx<RxList<Listing>> listData = RxList<Listing>([]).obs;
   RxInt page = 0.obs;
-  RxInt limit = 0.obs;
+  RxInt limit = 10.obs;
   RxBool isLoading = false.obs;
 
   void loadGrids()async{
     try{
       isLoading.value = true;
-      const String url = 'https://jsonplaceholder.typicode.com/todos';
+      final String url = 'https://jsonplaceholder.typicode.com/todos?_start=$page&_limit=$limit';
       http.Response response = await http.get(Uri.parse(url));
       if(response.statusCode == 200){
         RxList<Grid> list =  RxList<Grid>.from(json.decode(response.body).map((x) => Grid.fromJson(x)));
-        gridData.value = list;
+        gridData.value.addAll(list);
       }else{
         throw response;
       }
