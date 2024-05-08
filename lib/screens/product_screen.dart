@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/Drawer_nav.dart';
-import 'package:frontend/components/bottom_nav.dart';
-import 'package:frontend/components/header.dart';
-import 'package:frontend/components/product_item.dart';
-import 'package:frontend/components/product_row.dart';
 import 'package:frontend/components/stripe_form.dart';
 import 'package:frontend/controllers/product_controller.dart';
-import 'package:frontend/controllers/user_controller.dart';
-import 'package:frontend/models/product.dart';
 import 'package:get/get.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -24,8 +18,8 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   void initState() {
-    productController.loadProducts();
     super.initState();
+    productController.loadProducts();
     controller = ScrollController()..addListener(_scrollListener);
   }
 
@@ -65,7 +59,8 @@ class _ProductScreenState extends State<ProductScreen> {
                             showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
-                                return const StripeForm();
+                                return StripeForm(productId: productController.products.value[index].id, ctx: context);
+                                // return const Text("text");
                               },
                             );
                         }, icon: const Icon(Icons.payment))

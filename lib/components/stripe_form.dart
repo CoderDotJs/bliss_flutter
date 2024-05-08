@@ -1,47 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:frontend/controllers/order_controller.dart';
+import 'package:get/get.dart';
 
 class StripeForm extends StatefulWidget{
-  const StripeForm({super.key});
+  const StripeForm({super.key, required this.productId, required this.ctx});
+  final String productId;
+  final BuildContext ctx;
 
   @override
   State<StripeForm> createState() => _StripeFormState();
 }
 
 class _StripeFormState extends State<StripeForm> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-    @override
-  void initState() async {
-    super.initState();
-    await initiatePayment();
-  }
-  Future<void> initiatePayment() async {
-    try {
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: const SetupPaymentSheetParameters(customFlow: true, merchantDisplayName: 'Demo App', paymentIntentClientSecret: '')
-      );
-
-
-
-      // Payment successful
-      print('Payment successful');
-    } catch (error) {
-      // Handle error
-      print('Error: $error');
-    }
-  }
+  String get productId => widget.productId;
+  BuildContext get ctx => widget.ctx;
+  final OrderController orderController = Get.put(OrderController());
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: ElevatedButton(
+      body: Center(child: ElevatedButton(
         onPressed: () async {
-          await Stripe.instance.presentPaymentSheet();
+          print('clicked!');
+          await orderController.initPaymentSheet(productId: productId, ctx: ctx);
         },
       child: const Row(children: [Icon(Icons.payment), Text("Proceed Payment")],),
-      ),
+      ),),
     );
   }
 }

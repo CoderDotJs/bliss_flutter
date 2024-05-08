@@ -5,6 +5,7 @@ List<Product> productFromJson(String str) => List<Product>.from(json.decode(str)
 String productToJson(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Product {
+    String id;
     String name;
     int stock;
     String? img;
@@ -12,6 +13,7 @@ class Product {
     String desc;
 
     Product({
+        required this.id,
         required this.name,
         required this.stock,
         required this.img,
@@ -20,6 +22,7 @@ class Product {
     });
 
     factory Product.fromJson(Map<String, dynamic> json) => Product(
+        id: json["_id"],
         name: json["name"],
         stock: json["stock"],
         img: json["img"],
@@ -28,6 +31,7 @@ class Product {
     );
 
     Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
         "stock": stock,
         "img": img,
